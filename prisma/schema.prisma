@@ -1,0 +1,26 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Usuario {
+  id               Int      @id @default(autoincrement())
+  nombre           String
+  email            String   @unique
+  password         String
+  verificado       Boolean  @default(false)
+  tokenVerificacion String?
+  fechaRegistro    DateTime @default(now())
+  roles            Int      // Relación con la tabla Rol (debe coincidir con el tipo de dato de id en Rol)
+  Rol              Rol      @relation(fields: [roles], references: [id])
+}
+
+model Rol {
+  id     Int    @id @default(autoincrement())
+  nombre String
+  Usuarios Usuario[]
+}
