@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors'); // Importa CORS
 const dotenv = require('dotenv');
 const userRoutes = require('./routes/userRoutes');
 const swaggerUi = require('swagger-ui-express');
@@ -10,8 +11,9 @@ const app = express();
 app.use(express.json());
 
 
-app.set('view engine', 'ejs');
+app.use(cors({ origin: 'http://localhost:5173' })); // Cambia al puerto de tu frontend
 
+app.set('view engine', 'ejs');
 
 const swaggerOptions = {
   swaggerDefinition: {
