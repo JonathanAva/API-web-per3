@@ -10,10 +10,6 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-<<<<<<< HEAD
-
-app.use(cors({ origin: 'http://localhost:5173' })); // Cambia al puerto de tu frontend
-=======
 // Configura CORS para permitir múltiples orígenes
 const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174'];
 app.use(cors({
@@ -25,7 +21,6 @@ app.use(cors({
     }
   }
 }));
->>>>>>> 5d2dd1cd815b28074fff5bcf499289f38c37b145
 
 app.set('view engine', 'ejs');
 
