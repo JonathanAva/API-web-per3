@@ -13,12 +13,11 @@ exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const { user, token } = await userService.loginUser(email, password);
-    return res.status(200).json({ user, token });
+    return res.status(200).json({ user, token: `Bearer ${token}` });
   } catch (error) {
     return res.status(401).json({ error: 'Credenciales inválidas' });
   }
 };
-
 
 exports.verifyEmail = async (req, res) => {
   try {
@@ -29,5 +28,3 @@ exports.verifyEmail = async (req, res) => {
     return res.status(400).send(error.message);
   }
 };
-
-

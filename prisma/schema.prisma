@@ -8,19 +8,40 @@ generator client {
 }
 
 model Usuario {
-  id               Int      @id @default(autoincrement())
+  id               Int       @id @default(autoincrement())
   nombre           String
-  email            String   @unique
+  email            String    @unique
   password         String
-  verificado       Boolean  @default(false)
+  verificado       Boolean   @default(false)
   tokenVerificacion String?
-  fechaRegistro    DateTime @default(now())
-  roles            Int      // Relación con la tabla Rol (debe coincidir con el tipo de dato de id en Rol)
-  Rol              Rol      @relation(fields: [roles], references: [id])
+  fechaRegistro    DateTime  @default(now())
+  roles            Int       // Foreign key referencing Rol
+  Rol              Rol       @relation(fields: [roles], references: [id])
+  Causas           Causa[]   // One-to-many relationship with Causa
 }
 
 model Rol {
-  id     Int    @id @default(autoincrement())
-  nombre String
-  Usuarios Usuario[]
+  id       Int        @id @default(autoincrement())
+  nombre   String
+  Usuarios Usuario[]  // One-to-many relationship with Usuario
+}
+
+model Causa {
+  id              Int       @id @default(autoincrement())
+  idUsuario       Int       // Foreign key referencing Usuario
+  nombreCausa     String
+  descripcion     String
+  meta            String
+  fechaInicio     DateTime
+  fechaFin        DateTime
+  tipoDonacion    String
+  idCategoria     Int       // Foreign key referencing Categoria
+  Usuario         Usuario   @relation(fields: [idUsuario], references: [id])
+  Categoria       Categoria @relation(fields: [idCategoria], references: [id])
+}
+
+model Categoria {
+  id            Int      @id @default(autoincrement())
+  nombre        String
+  Causas        Causa[]  // One-to-many relationship with Causa
 }
