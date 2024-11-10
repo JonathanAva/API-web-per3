@@ -5,6 +5,7 @@ const userRoutes = require('./routes/userRoutes');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const causaRoutes = require('./routes/causaRoutes');
+const categoriaRoutes = require('./routes/categoriaRoutes'); 
 
 dotenv.config();
 
@@ -47,6 +48,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use('/api/users', userRoutes);
 app.use('/api/causas', causaRoutes);
+app.use('/api/categorias', categoriaRoutes);
 
 app.listen(3000, () => {
   console.log('Servidor corriendo en el puerto 3000');

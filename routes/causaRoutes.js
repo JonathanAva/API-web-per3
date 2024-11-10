@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const causaController = require('../controllers/causaController');
 const { verifyToken } = require('../middlewares/authMiddleware');
+const upload = require('../middlewares/uploadMiddleware'); 
 
 /**
  * @swagger
@@ -39,11 +40,12 @@ const { verifyToken } = require('../middlewares/authMiddleware');
  *         description: Causa creada exitosamente
  */
 
-router.post('/', verifyToken, causaController.createCausa); // Proteger creación de causa
+router.post('/', verifyToken, upload.single('portada'), causaController.createCausa); // Permitir carga de un solo archivo 'portada'
 router.get('/:id', causaController.getCausaById);
 router.put('/:id', verifyToken, causaController.updateCausa);
 router.delete('/:id', verifyToken, causaController.deleteCausa);
 router.get('/totales/por-dia', causaController.getTotalCausasByDay);
 router.get('/usuario/:userId', causaController.getCausasByUserId);
+
 
 module.exports = router;

@@ -38,7 +38,9 @@ model Causa {
   idCategoria     Int       // Foreign key referencing Categoria
   Usuario         Usuario   @relation(fields: [idUsuario], references: [id])
   Categoria       Categoria @relation(fields: [idCategoria], references: [id])
+  portada         String?   // Nueva columna para la URL o ruta de la imagen de portada
 }
+
 
 model Categoria {
   id            Int      @id @default(autoincrement())

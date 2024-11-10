@@ -4,7 +4,8 @@ exports.createCausa = async (req, res) => {
   try {
     const causaData = {
       ...req.body,
-      idUsuario: req.userId,  
+      idUsuario: req.userId,  // Usar el userId del token como idUsuario
+      portada: req.file ? `/uploads/${req.file.filename}` : null // Ruta del archivo de imagen/video
     };
     const newCausa = await causaService.createCausa(causaData);
     return res.status(201).json(newCausa);
@@ -12,6 +13,7 @@ exports.createCausa = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
+
 
 exports.getCausaById = async (req, res) => {
   try {
