@@ -5,14 +5,16 @@ exports.createCausa = async (req, res) => {
     const causaData = {
       ...req.body,
       idUsuario: req.userId,  // Usar el userId del token como idUsuario
-      portada: req.file ? `/uploads/${req.file.filename}` : null // Ruta del archivo de imagen/video
+      portada: req.file ? `/uploads/${req.file.filename}` : null // Guardar la ruta de la portada si existe
     };
     const newCausa = await causaService.createCausa(causaData);
     return res.status(201).json(newCausa);
   } catch (error) {
+    console.error('Error al crear la causa:', error);
     return res.status(500).json({ error: error.message });
   }
 };
+
 
 
 exports.getCausaById = async (req, res) => {
