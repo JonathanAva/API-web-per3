@@ -6,7 +6,6 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const causaRoutes = require('./routes/causaRoutes');
 const categoriaRoutes = require('./routes/categoriaRoutes'); 
-const express = require('express');
 const path = require('path');
 
 dotenv.config();
