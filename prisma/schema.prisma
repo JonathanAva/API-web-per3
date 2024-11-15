@@ -18,6 +18,7 @@ model Usuario {
   roles            Int       // Foreign key referencing Rol
   Rol              Rol       @relation(fields: [roles], references: [id])
   Causas           Causa[]   // One-to-many relationship with Causa
+  Donaciones       Donacion[] // One-to-many relationship with Donacion
 }
 
 model Rol {
@@ -39,11 +40,33 @@ model Causa {
   Usuario         Usuario   @relation(fields: [idUsuario], references: [id])
   Categoria       Categoria @relation(fields: [idCategoria], references: [id])
   portada         String?   // Nueva columna para la URL o ruta de la imagen de portada
+  Donaciones      Donacion[] // One-to-many relationship with Donacion
 }
-
 
 model Categoria {
   id            Int      @id @default(autoincrement())
   nombre        String
   Causas        Causa[]  // One-to-many relationship with Causa
+}
+
+model Donacion {
+  id              Int       @id @default(autoincrement())
+  idUsuario       Int       // Foreign key referencing Usuario
+  idCausa         Int       // Foreign key referencing Causa
+  tipoDonacion    String
+  monto           Float?    // Only for "Dinero" type
+  descripcion     String?
+  fechaDonacion   DateTime  @default(now())
+  img             String?   // Image for "Ropa" or "Utensilios" type
+  Usuario         Usuario   @relation(fields: [idUsuario], references: [id])
+  Causa           Causa     @relation(fields: [idCausa], references: [id])
+  Pagos           Pago[]    // One-to-many relationship with Pago
+}
+
+model Pago {
+  id              Int       @id @default(autoincrement())
+  idDonacion      Int       // Foreign key referencing Donacion
+  monto           Float
+  fechaPago       DateTime  @default(now())
+  Donacion        Donacion  @relation(fields: [idDonacion], references: [id])
 }
