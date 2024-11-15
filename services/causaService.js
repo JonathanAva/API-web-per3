@@ -12,6 +12,7 @@ class CausaService {
     if (!causa) throw new Error('Causa no encontrada');
     return new CausaDTO(causa);
   }
+  
 
   async updateCausa(id, causaData) {
     const updatedCausa = await causaRepository.updateCausa(id, causaData);

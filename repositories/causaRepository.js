@@ -24,15 +24,20 @@ async getLastSixCausas() {
   
 
 
-  async getCausaById(id) {
-    return await prisma.causa.findUnique({
-      where: { id },
-      include: {
-        Usuario: true,  // Incluir datos del usuario que creó la causa
-        Categoria: true // Incluir información de la categoría de la causa
-      }
-    });
-  }
+// causaRepository.js
+async getCausaById(id) {
+  return await prisma.causa.findUnique({
+    where: { id: parseInt(id) }, // Asegúrate de convertir 'id' a entero si es necesario
+    include: {
+      Usuario: {
+        select: { nombre: true } // Asegúrate de que 'nombre' es el campo correcto
+      },
+      Categoria: true
+    }
+  });
+}
+
+
 
   async updateCausa(id, causaData) {
     return await prisma.causa.update({

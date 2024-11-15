@@ -49,7 +49,12 @@ exports.getLastSixCausas = async (req, res) => {
 
 exports.getCausaById = async (req, res) => {
   try {
-    const causa = await causaService.getCausaById(req.params.id);
+    const id = parseInt(req.params.id, 10); // Asegúrate de convertir el id a entero
+    if (isNaN(id)) {
+      return res.status(400).json({ error: 'ID inválido' });
+    }
+
+    const causa = await causaService.getCausaById(id);
     if (!causa) {
       return res.status(404).json({ error: 'Causa no encontrada' });
     }
@@ -59,6 +64,7 @@ exports.getCausaById = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
+
 
 exports.updateCausa = async (req, res) => {
   try {

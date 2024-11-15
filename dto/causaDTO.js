@@ -10,6 +10,9 @@ class CausaDTO {
     this.idUsuario = causa.idUsuario;
     this.idCategoria = causa.idCategoria;
     this.portada = causa.portada; // Incluir el campo de portada
+
+    // Incluir el nombre del usuario si está disponible
+    this.usuarioNombre = causa.Usuario ? causa.Usuario.nombre : 'Desconocido';
   }
 }
 
