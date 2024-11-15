@@ -2,11 +2,27 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 class CausaRepository {
+
+// En el repositorio de causa (causaRepository.js)
+async getLastSixCausas() {
+  return await prisma.causa.findMany({
+    orderBy: { fechaInicio: 'desc' },
+    take: 6,
+    include: {
+      Usuario: true,
+      Categoria: true,
+    },
+  });
+}
+
+  
   async createCausa(causaData) {
     return await prisma.causa.create({
       data: causaData,
     });
   }
+  
+
 
   async getCausaById(id) {
     return await prisma.causa.findUnique({
@@ -39,6 +55,8 @@ class CausaRepository {
       },
     });
   }
+
+  
 
   async getCausasByUserId(userId) {
     return await prisma.causa.findMany({

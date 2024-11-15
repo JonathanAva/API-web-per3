@@ -27,12 +27,21 @@ class CausaService {
 
   async getTotalCausasByDay() {
     const totalCausasByDay = await causaRepository.getTotalCausasByDay();
-    return totalCausasByDay.map(day => ({ fecha: day.fechaInicio, total: day._count.id }));
+    return totalCausasByDay.map(day => ({
+      fecha: day.fechaInicio,
+      total: day._count.id,
+    }));
   }
 
   async getCausasByUserId(userId) {
     const causas = await causaRepository.getCausasByUserId(userId);
-    if (!causas || causas.length === 0) throw new Error('No se encontraron causas para el usuario');
+    if (!causas || causas.length === 0)
+      throw new Error('No se encontraron causas para el usuario');
+    return causas.map(causa => new CausaDTO(causa));
+  }
+
+  async getLastSixCausas() {
+    const causas = await causaRepository.getLastSixCausas();
     return causas.map(causa => new CausaDTO(causa));
   }
 }

@@ -36,6 +36,16 @@ exports.createCausa = async (req, res) => {
   }
 };
 
+exports.getLastSixCausas = async (req, res) => {
+  try {
+    const causas = await causaService.getLastSixCausas();
+    return res.status(200).json(causas);
+  } catch (error) {
+    console.error('Error al obtener las últimas 6 causas:', error);
+    return res.status(500).json({ error: error.message });
+  }
+};
+
 
 exports.getCausaById = async (req, res) => {
   try {
