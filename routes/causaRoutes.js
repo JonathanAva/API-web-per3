@@ -53,4 +53,7 @@ router.delete('/:id', verifyToken, causaController.deleteCausa);
 router.get('/totales/por-dia', causaController.getTotalCausasByDay);
 router.get('/usuario/:userId', causaController.getCausasByUserId);
 
+router.get('/categoria/:nombre', causaController.getCausasByCategoriaNombre);
+
+
 module.exports = router;

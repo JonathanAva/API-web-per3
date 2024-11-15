@@ -147,3 +147,18 @@ exports.getCausasByUserId = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
+
+exports.getCausasByCategoriaNombre = async (req, res) => {
+  try {
+    const nombreCategoria = req.params.nombre;
+    const causas = await causaService.getCausasByCategoriaNombre(nombreCategoria);
+    if (!causas || causas.length === 0) {
+      return res.status(404).json({ error: 'No se encontraron causas para esta categoría' });
+    }
+    return res.status(200).json(causas);
+  } catch (error) {
+    console.error('Error al obtener causas por categoría:', error);
+    return res.status(500).json({ error: error.message });
+  }
+};
+

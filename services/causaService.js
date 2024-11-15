@@ -53,6 +53,11 @@ class CausaService {
     const causas = await causaRepository.getLastSixCausas();
     return causas.map(causa => new CausaDTO(causa));
   }
+
+  async getCausasByCategoriaNombre(nombreCategoria) {
+  return await causaRepository.getCausasByCategoriaNombre(nombreCategoria);
+}
+
 }
 
 module.exports = new CausaService();

@@ -83,6 +83,21 @@ class CausaRepository {
       },
     });
   }
+
+  async getCausasByCategoriaNombre(nombreCategoria) {
+    return await prisma.causa.findMany({
+      where: {
+        Categoria: {
+          nombre: nombreCategoria
+        }
+      },
+      include: {
+        Usuario: { select: { nombre: true } },
+        Categoria: true
+      }
+    });
+  }
+  
 }
 
 module.exports = new CausaRepository();
