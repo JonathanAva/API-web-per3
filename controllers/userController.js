@@ -23,7 +23,7 @@ exports.verifyEmail = async (req, res) => {
   try {
     const { token } = req.query;
     const message = await userService.verifyEmail(token);
-    return res.sendFile('success.html', { root: './public' }); 
+    return res.sendFile('success.ejs', { root: './views' }); 
   } catch (error) {
     return res.status(400).send(error.message);
   }
