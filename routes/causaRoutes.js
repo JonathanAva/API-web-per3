@@ -45,6 +45,8 @@ const upload = require('../middlewares/uploadMiddleware');
 
 router.post('/', verifyToken, upload.single('portada'), causaController.createCausa);
 router.get('/ultimas', causaController.getLastSixCausas);
+router.get('/', causaController.getAllCausas);
+router.get('/mis-causas', verifyToken, causaController.getCausasByCurrentUser);
 router.get('/:id', causaController.getCausaById);
 router.put('/:id', verifyToken, causaController.updateCausa);
 router.delete('/:id', verifyToken, causaController.deleteCausa);

@@ -7,6 +7,12 @@ class CausaService {
     return new CausaDTO(newCausa);
   }
 
+  async getAllCausas() {
+    const causas = await causaRepository.getAllCausas();
+    return causas.map(causa => new CausaDTO(causa));
+  }
+
+  
   async getCausaById(id) {
     const causa = await causaRepository.getCausaById(id);
     if (!causa) throw new Error('Causa no encontrada');
@@ -20,6 +26,8 @@ class CausaService {
     return new CausaDTO(updatedCausa);
   }
 
+
+  
   async deleteCausa(id) {
     const causa = await causaRepository.getCausaById(id);
     if (!causa) throw new Error('Causa no encontrada');

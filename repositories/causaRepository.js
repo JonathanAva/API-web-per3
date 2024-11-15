@@ -2,43 +2,37 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 class CausaRepository {
+  // Método para obtener las últimas seis causas
+  async getLastSixCausas() {
+    return await prisma.causa.findMany({
+      orderBy: { fechaInicio: 'desc' },
+      take: 6,
+      include: {
+        Usuario: { select: { nombre: true } }, // Incluye el nombre del usuario
+        Categoria: true,
+      },
+    });
+  }
 
-// En el repositorio de causa (causaRepository.js)
-async getLastSixCausas() {
-  return await prisma.causa.findMany({
-    orderBy: { fechaInicio: 'desc' },
-    take: 6,
-    include: {
-      Usuario: true,
-      Categoria: true,
-    },
-  });
-}
-
-  
+  // Método para crear una nueva causa
   async createCausa(causaData) {
     return await prisma.causa.create({
       data: causaData,
     });
   }
-  
 
-
-// causaRepository.js
-async getCausaById(id) {
-  return await prisma.causa.findUnique({
-    where: { id: parseInt(id) }, // Asegúrate de convertir 'id' a entero si es necesario
-    include: {
-      Usuario: {
-        select: { nombre: true } // Asegúrate de que 'nombre' es el campo correcto
+  // Método para obtener una causa por ID
+  async getCausaById(id) {
+    return await prisma.causa.findUnique({
+      where: { id: parseInt(id) },
+      include: {
+        Usuario: { select: { nombre: true } }, // Incluye el nombre del usuario
+        Categoria: true,
       },
-      Categoria: true
-    }
-  });
-}
+    });
+  }
 
-
-
+  // Método para actualizar una causa
   async updateCausa(id, causaData) {
     return await prisma.causa.update({
       where: { id },
@@ -46,12 +40,14 @@ async getCausaById(id) {
     });
   }
 
+  // Método para eliminar una causa
   async deleteCausa(id) {
     return await prisma.causa.delete({
       where: { id },
     });
   }
 
+  // Método para obtener el total de causas por día
   async getTotalCausasByDay() {
     return await prisma.causa.groupBy({
       by: ['fechaInicio'],
@@ -61,14 +57,24 @@ async getCausaById(id) {
     });
   }
 
-  
+  async getAllCausas() {
+    return await prisma.causa.findMany({
+      include: {
+        Usuario: { select: { nombre: true } },
+        Categoria: true,
+      },
+    });
+  }
 
+
+
+  // Método para obtener causas por usuario
   async getCausasByUserId(userId) {
     return await prisma.causa.findMany({
       where: { idUsuario: userId },
       include: {
-        Categoria: true // Incluir información de la categoría en cada causa
-      }
+        Categoria: true, // Incluye la categoría en cada causa
+      },
     });
   }
 }

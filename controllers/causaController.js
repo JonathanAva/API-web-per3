@@ -46,6 +46,31 @@ exports.getLastSixCausas = async (req, res) => {
   }
 };
 
+// causaController.js
+exports.getCausasByCurrentUser = async (req, res) => {
+  try {
+    const userId = req.userId; // Obtiene el ID del usuario del token
+    const causas = await causaService.getCausasByUserId(userId);
+    if (!causas || causas.length === 0) {
+      return res.status(404).json({ error: 'No se encontraron causas para este usuario' });
+    }
+    return res.status(200).json(causas);
+  } catch (error) {
+    console.error('Error al obtener las causas del usuario:', error);
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+
+exports.getAllCausas = async (req, res) => {
+  try {
+    const causas = await causaService.getAllCausas();
+    return res.status(200).json(causas);
+  } catch (error) {
+    console.error('Error al obtener todas las causas:', error);
+    return res.status(500).json({ error: error.message });
+  }
+};
 
 exports.getCausaById = async (req, res) => {
   try {
