@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
+const { verifyToken } = require('../middlewares/authMiddleware');
 
 /**
  * @swagger
@@ -45,10 +46,15 @@ const userController = require('../controllers/userController');
  *       400:
  *         description: Token inválido o expirado
  */
+
+
+router.get('/profile', verifyToken, userController.getProfile);
+
 router.post('/register', userController.register);
 
 router.post('/login', userController.login);
 
 router.get('/verify-email', userController.verifyEmail);
+
 
 module.exports = router;

@@ -57,6 +57,12 @@ class CausaRepository {
     });
   }
 
+  async getUserById(userId) {
+    return await prisma.usuario.findUnique({
+      where: { id: userId },
+    });
+  }
+
   async getAllCausas() {
     return await prisma.causa.findMany({
       include: {

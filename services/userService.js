@@ -22,6 +22,18 @@ class UserService {
     return newUser;
   }
 
+  async getUserById(userId) {
+    const user = await userRepository.getUserById(userId);
+    if (!user) throw new Error('Usuario no encontrado');
+    return {
+      id: user.id,
+      nombre: user.nombre,
+      email: user.email,
+      password: '****', // Devuelve la contraseña oculta
+    };
+  }
+  
+
   async loginUser(email, password) {
     const user = await userRepository.getUserByEmail(email);
     if (!user || !(await bcrypt.compare(password, user.password))) {

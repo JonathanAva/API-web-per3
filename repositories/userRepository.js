@@ -15,6 +15,17 @@ class UserRepository {
     });
   }
 
+  async getUserById(userId) {
+    return await prisma.usuario.findUnique({
+      where: { id: userId },
+      select: {
+        id: true,
+        nombre: true,
+        email: true,
+      },
+    });
+  }  
+
   async updateUserVerification(userId) {
     return await prisma.usuario.update({
       where: { id: userId },
@@ -23,5 +34,7 @@ class UserRepository {
   }
   
 }
+
+
 
 module.exports = new UserRepository();
