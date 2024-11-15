@@ -11,6 +11,10 @@ class CausaRepository {
   async getCausaById(id) {
     return await prisma.causa.findUnique({
       where: { id },
+      include: {
+        Usuario: true,  // Incluir datos del usuario que creó la causa
+        Categoria: true // Incluir información de la categoría de la causa
+      }
     });
   }
 
@@ -39,6 +43,9 @@ class CausaRepository {
   async getCausasByUserId(userId) {
     return await prisma.causa.findMany({
       where: { idUsuario: userId },
+      include: {
+        Categoria: true // Incluir información de la categoría en cada causa
+      }
     });
   }
 }

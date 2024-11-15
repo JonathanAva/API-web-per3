@@ -13,7 +13,7 @@ const upload = require('../middlewares/uploadMiddleware');
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
@@ -31,21 +31,23 @@ const upload = require('../middlewares/uploadMiddleware');
  *                 format: date
  *               tipoDonacion:
  *                 type: string
- *               idUsuario:
- *                 type: integer
  *               idCategoria:
  *                 type: integer
+ *               portada:
+ *                 type: string
+ *                 format: binary
  *     responses:
  *       201:
  *         description: Causa creada exitosamente
+ *       500:
+ *         description: Error interno del servidor
  */
 
-router.post('/', verifyToken, upload.single('portada'), causaController.createCausa); // Permitir carga de un solo archivo 'portada'
+router.post('/', verifyToken, upload.single('portada'), causaController.createCausa);
 router.get('/:id', causaController.getCausaById);
 router.put('/:id', verifyToken, causaController.updateCausa);
 router.delete('/:id', verifyToken, causaController.deleteCausa);
 router.get('/totales/por-dia', causaController.getTotalCausasByDay);
 router.get('/usuario/:userId', causaController.getCausasByUserId);
-
 
 module.exports = router;
