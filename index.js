@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const path = require('path');
-
+const donacionRoutes = require('./routes/donacionRoutes');
 const userRoutes = require('./routes/userRoutes');
 const causaRoutes = require('./routes/causaRoutes');
 const categoriaRoutes = require('./routes/categoriaRoutes');
@@ -57,6 +57,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/users', userRoutes);
 app.use('/api/causas', causaRoutes);
 app.use('/api/categorias', categoriaRoutes);
+app.use('/api/donaciones', donacionRoutes);
 
 // Manejo de rutas no encontradas
 app.use((req, res, next) => {
