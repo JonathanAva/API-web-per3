@@ -36,4 +36,6 @@ router.get('/causa/:idCausa', donacionController.getDonacionesByCausa);
 
 router.get('/usuario', verifyToken, donacionController.getDonacionesByUsuario);
 
+router.get('/estadisticas', donacionController.getAllDonaciones);
+
 module.exports = router;

@@ -16,6 +16,11 @@ class DonacionService {
     const donaciones = await donacionRepository.getDonacionesByUsuario(idUsuario);
     return donaciones.map(donacion => new DonacionDTO(donacion));
   }
+
+  async getAllDonaciones() {
+    const donaciones = await donacionRepository.getAllDonaciones(); // Llamamos al repositorio
+    return donaciones.map(donacion => new DonacionDTO(donacion)); // Transformamos en DTO
+  }
 }
 
 module.exports = new DonacionService();

@@ -66,3 +66,14 @@ exports.getDonacionesByUsuario = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.getAllDonaciones = async (req, res) => {
+  try {
+    const donaciones = await donacionService.getAllDonaciones(); // Llamamos al servicio para obtener las donaciones
+    res.status(200).json(donaciones); // Respondemos con las donaciones
+  } catch (error) {
+    console.error('Error al obtener todas las donaciones:', error);
+    res.status(500).json({ error: 'Error al obtener todas las donaciones' });
+  }
+};
+

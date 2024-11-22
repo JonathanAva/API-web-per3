@@ -39,6 +39,15 @@ class DonacionRepository {
       },
     });
   }
+
+  async getAllDonaciones() {
+    return await prisma.donacion.findMany({
+      include: {
+        Usuario: { select: { nombre: true } }, // Incluir datos del usuario
+        Causa: { select: { nombreCausa: true } }, // Incluir datos de la causa
+      },
+    });
+  }
 }
 
 module.exports = new DonacionRepository();
