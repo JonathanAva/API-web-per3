@@ -41,8 +41,10 @@ model Causa {
   Categoria       Categoria @relation(fields: [idCategoria], references: [id])
   portada         String?   // Nueva columna para la URL o ruta de la imagen de portada
   Donaciones      Donacion[] // One-to-many relationship with Donacion
-  Informes        Informe[]  // Nueva relación One-to-Many con Informe
+  Informes        Informe[]  // Relación One-to-Many con Informe
+  finalizado      Boolean   @default(false) // Nuevo campo para indicar si está finalizado
 }
+
 
 model Categoria {
   id            Int      @id @default(autoincrement())
