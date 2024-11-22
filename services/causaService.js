@@ -16,7 +16,14 @@ class CausaService {
   async getCausaById(id) {
     const causa = await causaRepository.getCausaById(id);
     if (!causa) throw new Error('Causa no encontrada');
-    return new CausaDTO(causa);
+
+    // Calcular el total recaudado
+    const totalRecaudado = causa.Donaciones.reduce((sum, donacion) => sum + (donacion.monto || 0), 0);
+
+    return {
+      ...new CausaDTO(causa),
+      recaudado: totalRecaudado,
+    };
   }
   
 
@@ -51,9 +58,15 @@ class CausaService {
 
   async getLastSixCausas() {
     const causas = await causaRepository.getLastSixCausas();
-    return causas.map(causa => new CausaDTO(causa));
-  }
 
+    return causas.map((causa) => {
+      const totalRecaudado = causa.Donaciones.reduce((sum, donacion) => sum + (donacion.monto || 0), 0);
+      return {
+        ...new CausaDTO(causa),
+        recaudado: totalRecaudado,
+      };
+    });
+  }
   async getCausasByCategoriaNombre(nombreCategoria) {
   return await causaRepository.getCausasByCategoriaNombre(nombreCategoria);
 }

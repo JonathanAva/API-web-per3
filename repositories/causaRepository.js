@@ -10,6 +10,11 @@ class CausaRepository {
       include: {
         Usuario: { select: { nombre: true } }, // Incluye el nombre del usuario
         Categoria: true,
+        Donaciones: {
+          select: {
+            monto: true, // Selecciona los montos de donaciones
+          },
+        },
       },
     });
   }
@@ -26,8 +31,13 @@ class CausaRepository {
     return await prisma.causa.findUnique({
       where: { id: parseInt(id) },
       include: {
-        Usuario: { select: { nombre: true } }, // Incluye el nombre del usuario
+        Usuario: { select: { nombre: true } },
         Categoria: true,
+        Donaciones: {
+          select: {
+            monto: true, // Incluye los montos de las donaciones
+          },
+        },
       },
     });
   }
@@ -97,7 +107,8 @@ class CausaRepository {
       }
     });
   }
-  
+
+
 }
 
 module.exports = new CausaRepository();
