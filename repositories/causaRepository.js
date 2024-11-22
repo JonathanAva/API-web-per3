@@ -95,13 +95,24 @@ class CausaRepository {
 
   // Método para obtener causas por usuario
   async getCausasByUserId(userId) {
-    return await prisma.causa.findMany({
+    const causas = await prisma.causa.findMany({
       where: { idUsuario: userId },
       include: {
-        Categoria: true, // Incluye la categoría en cada causa
+        Donaciones: {
+          select: {
+            monto: true, // Obtén los montos de las donaciones
+          },
+        },
       },
     });
+  
+    // Calcula el total recaudado para cada causa
+    return causas.map((causa) => ({
+      ...causa,
+      recaudado: causa.Donaciones.reduce((sum, donacion) => sum + (donacion.monto || 0), 0), // Suma de las donaciones
+    }));
   }
+  
 
   async getCausasByCategoriaNombre(nombreCategoria) {
     const causas = await prisma.causa.findMany({

@@ -58,10 +58,18 @@ class CausaService {
 
   async getCausasByUserId(userId) {
     const causas = await causaRepository.getCausasByUserId(userId);
-    if (!causas || causas.length === 0)
-      throw new Error('No se encontraron causas para el usuario');
-    return causas.map(causa => new CausaDTO(causa));
+  
+    // Mapea las causas y asegura que los valores sean numéricos
+    return causas.map((causa) => ({
+      id: causa.id,
+      nombreCausa: causa.nombreCausa,
+      descripcion: causa.descripcion,
+      meta: parseFloat(causa.meta), // Convierte meta a número
+      recaudado: parseFloat(causa.recaudado || 0), // Convierte recaudado a número
+      portada: causa.portada,
+    }));
   }
+  
 
   async getLastSixCausas() {
     const causas = await causaRepository.getLastSixCausas();
