@@ -58,14 +58,16 @@ exports.getDonacionesByCausa = async (req, res) => {
 
 exports.getDonacionesByUsuario = async (req, res) => {
   try {
-    const userId = req.userId; // Obtenemos el ID del usuario autenticado desde el token
+    const userId = req.userId;
     const donaciones = await donacionService.getDonacionesByUsuario(userId);
+    console.log('Donaciones obtenidas:', donaciones); // Agregar este log para verificar
     res.status(200).json(donaciones);
   } catch (error) {
     console.error('Error al obtener donaciones por usuario:', error);
     res.status(500).json({ error: error.message });
   }
 };
+
 
 exports.getAllDonaciones = async (req, res) => {
   try {
