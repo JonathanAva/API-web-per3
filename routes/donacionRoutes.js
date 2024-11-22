@@ -38,4 +38,6 @@ router.get('/usuario', verifyToken, donacionController.getDonacionesByUsuario);
 
 router.get('/estadisticas', donacionController.getAllDonaciones);
 
+router.get('/historial', donacionController.getDonacionesHistorial);
+
 module.exports = router;

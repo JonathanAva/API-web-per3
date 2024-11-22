@@ -77,3 +77,14 @@ exports.getAllDonaciones = async (req, res) => {
   }
 };
 
+exports.getDonacionesHistorial = async (req, res) => {
+  try {
+    const { fecha } = req.query; // Obtiene la fecha de los parámetros de consulta
+    const donaciones = await donacionService.getDonacionesHistorial(fecha); // Llama al servicio con la fecha
+    res.status(200).json(donaciones); // Devuelve las donaciones en formato JSON
+  } catch (error) {
+    console.error('Error al obtener el historial de donaciones:', error);
+    res.status(500).json({ error: 'Error al obtener el historial de donaciones.' });
+  }
+};
+

@@ -48,6 +48,20 @@ class DonacionRepository {
       },
     });
   }
+
+  async getDonacionesHistorial(fecha = null) {
+    const whereClause = fecha
+      ? { fechaDonacion: { gte: new Date(fecha), lt: new Date(new Date(fecha).setDate(new Date(fecha).getDate() + 1)) } }
+      : {};
+
+    return await prisma.donacion.findMany({
+      where: whereClause,
+      include: {
+        Usuario: { select: { nombre: true } }, // Incluye el nombre del usuario
+        Causa: { select: { nombreCausa: true } }, // Incluye el nombre de la causa
+      },
+    });
+  }
 }
 
 module.exports = new DonacionRepository();
