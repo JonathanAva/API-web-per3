@@ -74,12 +74,21 @@ class CausaRepository {
   }
 
   async getAllCausas() {
-    return await prisma.causa.findMany({
+    const causas = await prisma.causa.findMany({
       include: {
-        Usuario: { select: { nombre: true } },
-        Categoria: true,
+        Donaciones: {
+          select: {
+            monto: true,
+          },
+        },
       },
     });
+
+    // Agregar el total recaudado a cada causa
+    return causas.map((causa) => ({
+      ...causa,
+      recaudado: causa.Donaciones.reduce((sum, donacion) => sum + (donacion.monto || 0), 0),
+    }));
   }
 
 

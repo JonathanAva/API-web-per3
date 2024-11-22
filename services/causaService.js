@@ -9,7 +9,14 @@ class CausaService {
 
   async getAllCausas() {
     const causas = await causaRepository.getAllCausas();
-    return causas.map(causa => new CausaDTO(causa));
+    return causas.map((causa) => ({
+      id: causa.id,
+      nombreCausa: causa.nombreCausa,
+      descripcion: causa.descripcion,
+      meta: parseFloat(causa.meta), // Asegurarse que meta sea un número
+      recaudado: parseFloat(causa.recaudado || 0), // Agregar total recaudado
+      portada: causa.portada,
+    }));
   }
 
   
