@@ -75,8 +75,16 @@ class CausaService {
     });
   }
   async getCausasByCategoriaNombre(nombreCategoria) {
-  return await causaRepository.getCausasByCategoriaNombre(nombreCategoria);
-}
+    const causas = await causaRepository.getCausasByCategoriaNombre(nombreCategoria);
+    return causas.map((causa) => ({
+      id: causa.id,
+      nombreCausa: causa.nombreCausa,
+      descripcion: causa.descripcion,
+      meta: parseFloat(causa.meta), // Meta como número
+      recaudado: parseFloat(causa.recaudado || 0), // Total recaudado
+      portada: causa.portada,
+    }));
+  }
 
 }
 

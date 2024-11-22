@@ -41,6 +41,7 @@ model Causa {
   Categoria       Categoria @relation(fields: [idCategoria], references: [id])
   portada         String?   // Nueva columna para la URL o ruta de la imagen de portada
   Donaciones      Donacion[] // One-to-many relationship with Donacion
+  Informes        Informe[]  // Nueva relación One-to-Many con Informe
 }
 
 model Categoria {
@@ -69,4 +70,13 @@ model Pago {
   monto           Float
   fechaPago       DateTime  @default(now())
   Donacion        Donacion  @relation(fields: [idDonacion], references: [id])
+}
+
+model Informe {
+  id           Int      @id @default(autoincrement())
+  descripcion  String
+  img          String
+  idCausa      Int      // Foreign key referencing Causa
+  Causa        Causa    @relation(fields: [idCausa], references: [id]) // Relación con Causa
+  createdAt    DateTime @default(now())
 }
