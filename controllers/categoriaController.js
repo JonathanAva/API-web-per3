@@ -8,3 +8,13 @@ exports.getCategorias = async (req, res) => {
     return res.status(500).json({ error: error.message });
   }
 };
+
+exports.getCategoriasConCausas = async (req, res) => {
+  try {
+    const categoriasConCausas = await categoriaService.getCategoriasConCausas();
+    res.status(200).json(categoriasConCausas);
+  } catch (error) {
+    console.error('Error al obtener las estadísticas de categorías:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};

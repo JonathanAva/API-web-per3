@@ -24,5 +24,6 @@ const categoriaController = require('../controllers/categoriaController');
  *                     type: string
  */
 router.get('/', categoriaController.getCategorias);
+router.get('/estadisticas', categoriaController.getCategoriasConCausas);
 
 module.exports = router;
